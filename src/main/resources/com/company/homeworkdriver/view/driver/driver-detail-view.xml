@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://driverDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="driverDc"
+                  class="com.company.homeworkdriver.entity.Driver">
+            <fetchPlan extends="_base">
+                <property name="documents" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="driverDl"/>
+            <collection id="documentsDc" property="documents"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="driverDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textField id="firstNameField" property="firstName"/>
+            <textField id="lastNameField" property="lastName"/>
+            <datePicker id="birthDateField" property="birthDate"/>
+            <textField id="licenseNumberField" property="license.number"/>
+            <datePicker id="licenseExpiryDateField" property="license.expiryDate"/>
+        </formLayout>
+        <h4 text="msg://com.company.homeworkdriver.entity/Driver.documents"/>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button action="documentsDataGrid.create"/>
+            <button action="documentsDataGrid.edit"/>
+            <button action="documentsDataGrid.remove"/>
+        </hbox>
+        <dataGrid id="documentsDataGrid" dataContainer="documentsDc" width="100%" minHeight="20em">
+            <actions>
+                <action id="create" type="list_create">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="edit" type="list_edit">
+                    <properties>
+                        <property name="openMode" value="DIALOG"/>
+                    </properties>
+                </action>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns>
+                <column property="type"/>
+            </columns>
+        </dataGrid>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

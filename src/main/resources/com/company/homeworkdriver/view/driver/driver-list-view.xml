@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://driverListView.title"
+      focusComponent="driversDataGrid">
+    <data>
+        <collection id="driversDc"
+                    class="com.company.homeworkdriver.entity.Driver">
+            <fetchPlan extends="_base">
+                <property name="documents" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="driversDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Driver e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="driversDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createBtn" action="driversDataGrid.create"/>
+            <button id="editBtn" action="driversDataGrid.edit"/>
+            <button id="removeBtn" action="driversDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="driversDl"/>
+        </hbox>
+        <dataGrid id="driversDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="driversDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="firstName"/>
+                <column property="lastName"/>
+                <column property="birthDate"/>
+                <column property="license.number"/>
+                <column property="license.expiryDate"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectBtn" action="selectAction"/>
+            <button id="discardBtn" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>
