@@ -20,17 +20,27 @@
         <action id="closeAction" type="detail_close"/>
     </actions>
     <layout>
-        <formLayout id="form" dataContainer="driverDc">
-            <responsiveSteps>
-                <responsiveStep minWidth="0" columns="1"/>
-                <responsiveStep minWidth="40em" columns="2"/>
-            </responsiveSteps>
-            <textField id="firstNameField" property="firstName"/>
-            <textField id="lastNameField" property="lastName"/>
-            <datePicker id="birthDateField" property="birthDate"/>
-            <textField id="licenseNumberField" property="license.number"/>
-            <datePicker id="licenseExpiryDateField" property="license.expiryDate"/>
-        </formLayout>
+        <hbox>
+            <formLayout id="form" dataContainer="driverDc">
+                <responsiveSteps>
+                    <responsiveStep minWidth="0" columns="1"/>
+                    <responsiveStep minWidth="40em" columns="2"/>
+                </responsiveSteps>
+                <textField id="firstNameField" property="firstName"/>
+                <textField id="lastNameField" property="lastName"/>
+                <datePicker id="birthDateField" property="birthDate"/>
+                <textField id="licenseNumberField" property="license.number"/>
+                <datePicker id="licenseExpiryDateField" property="license.expiryDate"/>
+                <hbox>
+                    <fileUploadField id="photoField" property="photo" dataContainer="driverDc"
+                                     acceptedFileTypes=".png,.jpg"/>
+                </hbox>
+            </formLayout>
+            <hbox justifyContent="END">
+                <image id="image" property="photo" dataContainer="driverDc"
+                       height="300px" width="300px" classNames="driver-picture"/>
+            </hbox>
+        </hbox>
         <h4 text="msg://com.company.homeworkdriver.entity/Driver.documents"/>
         <hbox id="buttonsPanel" classNames="buttons-panel">
             <button action="documentsDataGrid.create"/>
@@ -53,6 +63,7 @@
             </actions>
             <columns>
                 <column property="type"/>
+                <column property="file"/>
             </columns>
         </dataGrid>
         <hbox id="detailActions">

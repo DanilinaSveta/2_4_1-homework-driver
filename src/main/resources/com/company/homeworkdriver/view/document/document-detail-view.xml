@@ -22,9 +22,11 @@
         <formLayout id="form" dataContainer="documentDc">
             <comboBox id="typeComboBox"
                       property="type"/>
+            <fileStorageUploadField id="fileField" property="file"/>
         </formLayout>
         <hbox id="detailActions">
             <button id="saveAndCloseBtn" action="saveAction"/>
             <button id="closeBtn" action="closeAction"/>
         </hbox>
-    </layout></view>
+    </layout>
+</view>
