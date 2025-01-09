@@ -16,6 +16,8 @@ import io.jmix.flowui.component.image.JmixImage;
 import io.jmix.flowui.component.upload.FileUploadField;
 import io.jmix.flowui.download.Downloader;
 import io.jmix.flowui.kit.component.button.JmixButton;
+import io.jmix.flowui.kit.component.upload.event.FileUploadFinishedEvent;
+import io.jmix.flowui.kit.component.upload.event.FileUploadSucceededEvent;
 import io.jmix.flowui.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -51,6 +53,25 @@ public class DriverDetailView extends StandardDetailView<Driver> {
             }
             return null;
         });
+    }
+
+    @Subscribe("image")
+    public void onImageAttach(final AttachEvent event) {
+        byte[] photoBytes = getEditedEntity().getPhoto();
+        if (photoBytes == null){
+            image.setVisible(false);
+        }
+        else {
+            StreamResource resource = new StreamResource("photo",
+                    () -> new ByteArrayInputStream(photoBytes));
+            image.setSrc(resource);
+            image.setVisible(true);
+        }
+    }
+
+    @Subscribe("photoField")
+    public void onPhotoFieldFileUploadFinished(final FileUploadFinishedEvent<FileUploadField> event) {
+        image.setVisible(true);
     }
 
 }
